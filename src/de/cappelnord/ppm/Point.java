@@ -21,10 +21,19 @@
 
 package de.cappelnord.ppm;
 
+/**
+ * This class provides an easy and simple 2-dimensional vector to adress specific points
+ * in a {@link PPMatrix}. It provides no further functionality. This class should be
+ * self explanatory.
+ * 
+ * @author Patrick Borgeat
+ *
+ */
+
 public class Point {
 	
-	private int x;
-	private int y;
+	final private int x;
+	final private int y;
 	
 	public Point (int aX, int aY)
 	{

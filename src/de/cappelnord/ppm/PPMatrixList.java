@@ -20,8 +20,16 @@
 */
 
 package de.cappelnord.ppm;
-
 import java.util.*;
+
+/**
+ * {@link PPMatrixList} contains and manages a sequence of {@link PPMatrix} objects.
+ * At this moment {@link PPMatrixList} is just a wrapper for a {@link java.util.List}.
+ * In future releases there will be added more functionallity (filtering, output, ...).
+ * 
+ * @author Patrick Borgeat
+ *
+ */
 
 public class PPMatrixList {
 	
@@ -32,20 +40,44 @@ public class PPMatrixList {
 		list = new ArrayList<PPMatrix>();
 	}
 	
+	/**
+	 * Returns the instance of the {@link List}.
+	 * 
+	 * @return {@link List}
+	 */
+	
 	public List<PPMatrix> getListInstance()
 	{
 		return list;
 	}
+	
+	/**
+	 * Returns an {@link java.util.Iterator} for the {@link List}.
+	 * 
+	 * @return {@link Iterator}
+	 */
 	
 	public Iterator<PPMatrix> iterator()
 	{
 		return list.iterator();
 	}
 	
+	/**
+	 * Adds an {@link PPMatrix} to the {@link List}.
+	 * 
+	 * @param o {@link PPMatrix} to add
+	 */
+	
 	public void add(PPMatrix o)
 	{
 		list.add(o);
 	}
+	
+	/**
+	 * Returns the size of the {@link List}.
+	 * 
+	 * @return The size of the {@link List} as integer
+	 */
 	
 	public int size()
 	{

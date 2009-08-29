@@ -21,58 +21,61 @@
 
 package de.cappelnord.ppm;
 
-import processing.core.PApplet;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.*;
 import java.net.*;
 
 /**
- * This is a Processing library for the PublicPixelMatrix. As this is a very early version
- * it is heavily underdocumented. Please stay tuned for further releases. 
+ * PublicPixelMatrix acts as a factory class for {@link PPMatrix} or {@link PPMatrixList} objects.
+ * It provides only static methods for loading matrices out of files and URLs. You can also load
+ * matrices directly from the PublicPixelMatrix site. It also acts as storage for
+ * some global variables and provides some global methods. At this time there is only support for one format,
+ * the "raw" format. As this is quite inefficient there may be other formats in the future.
  * 
  * @author Patrick Borgeat
  * 
  */
 public class PublicPixelMatrix {
-
-	PApplet myParent;
 	
 	private static SimpleDateFormat dateFormat;
 	private static String dateFormatPattern ="dd.MM.yyyy HH:mm:ss";
-	private static String currentURL = "http://matrix.cappel-nord.de/data/current";
+	private final static String currentURL = "http://matrix.cappel-nord.de/data/current";
 	
-	public static final int DIM = 17;
-
-	public final String VERSION = "0.1.0";
-
-	/**
-	 * A Constructor, usually called in the setup() method in your sketch to
-	 * initialize and start the library.
-	 * 
-	 * @param theParent
-	 */
-	public PublicPixelMatrix(PApplet theParent) {
-		myParent = theParent;
-	}
+	public final static int DIM = 17;
+	public final static String VERSION = "0.1.0";
 
 	/**
 	 * Return the version of the library.
 	 * 
 	 * @return String
 	 */
-	public String version() {
+	
+	public static String version() {
 		return VERSION;
 	}
 	
-	public static String formatDate(Date d)
+	
+	/**
+	 * Central method to format {@link java.util.Date} objects into Strings. This hides {@link java.util.Date} objects from the Processing user.
+	 * 
+	 * @param date The {@link java.util.Date} object to format as {@link String}
+	 * @return Formatted date as {@link String}
+	 */
+	
+	public static String formatDate(Date date)
 	{		
 		if(dateFormat == null)
 			dateFormat = new SimpleDateFormat(dateFormatPattern);
 		
-		return dateFormat.format(d);
+		return dateFormat.format(date);
 	}
+	
+	/**
+	 * Sets a date format pattern. For more information look for the class {@link java.text.SimpleDateFormat} in the Java API.
+	 * 
+	 * @param s A new date format pattern. (default: "dd.MM.yyyy HH:mm:ss")
+	 */
 	
 	public static void setDateFormatPattern(String s)
 	{
@@ -122,8 +125,15 @@ public class PublicPixelMatrix {
 		return new PPMatrix(timestamp,matrix);
 	}
 	
-	// TODO: Files so auflšsen lassen wie in Processing Sketches.
+	// TODO: Resolve Files as Processing does it (looks in data folder, etc)
 
+	/**
+	 * Reads a {@link PPMatrix} in raw format from a local file.
+	 * 
+	 * @param s Location of the file containing a matrix in raw format
+	 * @return {@link PPMatrix}
+	 */
+	
 	public static PPMatrix readPPMatrixFromRawFile(String s)
 	{
 		BufferedReader in = null;
@@ -140,6 +150,13 @@ public class PublicPixelMatrix {
 		}
 	}
 	
+	/**
+	 * Reads a {@link PPMatrixList} in raw format from a local file.
+	 * 
+	 * @param s Location of the file containing one or more matrices in raw format
+	 * @return {@link PPMatrixList}
+	 */
+	
 	public static PPMatrixList readPPMatrixListFromRawFile(String s)
 	{
 		BufferedReader in = null;
@@ -152,11 +169,11 @@ public class PublicPixelMatrix {
 		}
 		catch(Exception e)
 		{
-			throw new RuntimeException("File " + s+ " not found!");
+			throw new RuntimeException("File " + s + " not found!");
 		}
 	}
 		
-	public static PPMatrixList readPPMatrixListFromBufferedReader(BufferedReader in)
+	private static PPMatrixList readPPMatrixListFromBufferedReader(BufferedReader in)
 	{
 		try {
 			PPMatrixList ret = new PPMatrixList();
@@ -203,7 +220,7 @@ public class PublicPixelMatrix {
 		return createPPMatrixFromRawStringArray(s);
 	}
 	
-	public static BufferedReader createBufferedReaderFromStringURL(String s)
+	private static BufferedReader createBufferedReaderFromStringURL(String s)
 	{
 		  try {
 			    URL                url; 
@@ -222,11 +239,23 @@ public class PublicPixelMatrix {
 		  		catch (IOException ioe) { throw new RuntimeException("Could not connect to Server ...");}
 	}
 	
+	/**
+	 * Reads the latest state of the PublicPixelMatrix from the web server.
+	 * 
+	 * @return Latest {@link PPMatrix}
+	 */
 	
 	public static PPMatrix readCurrentPPMatrix()
 	{
 	    return readPPMatrixFromURL(currentURL); 
 	}
+	
+	/**
+	 * Reads a {@link PPMatrix} in raw format from an URL.
+	 * 
+	 * @param s URL of the file containing a matrix in raw format
+	 * @return {@link PPMatrix}
+	 */
 	
 	public static PPMatrix readPPMatrixFromURL(String s)
 	{
@@ -236,6 +265,13 @@ public class PublicPixelMatrix {
 	    return ret;
 	}
 	
+	/**
+	 * Reads a {@link PPMatrixList} in raw format from an URL.
+	 * 
+	 * @param s URL of the file containing one or more matrices in raw format
+	 * @return {@link PPMatrixList}
+	 */
+	
 	public static PPMatrixList readPPMatrixListFromURL(String s)
 	{
 	    BufferedReader in  = createBufferedReaderFromStringURL(s); 
@@ -244,8 +280,4 @@ public class PublicPixelMatrix {
 	    return ret;
 	}
 
-	public static void setURL(String s)
-	{
-		currentURL = s;
-	}
 }
