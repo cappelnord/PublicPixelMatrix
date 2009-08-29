@@ -1,5 +1,6 @@
- This is a Processing library for the PublicPixelMatrix. As this is a very early version it is heavily underdocumented. Please stay tuned for further releases.
+ This is a Processing library for the PublicPixelMatrix. This is a very early version. Functionallity will improve and changes in the interface may occure. Please stay tuned for further releases.
  
  If your are looking for a ready to use Processing library check out the downloads.
  
  For more information visit http://matrix.cappel-nord.de
+ You can browse the documentation at http://matrix.cappel-nord.de/processing/reference/
