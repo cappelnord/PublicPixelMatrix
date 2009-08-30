@@ -42,7 +42,16 @@ public class PublicPixelMatrix {
 	private static String dateFormatPattern ="dd.MM.yyyy HH:mm:ss";
 	private final static String currentURL = "http://matrix.cappel-nord.de/data/current";
 	
+	/**
+	 * Size of the matrix (default: 17).
+	 */
+	
 	public final static int DIM = 17;
+	
+	/**
+	 * Version of the library.
+	 */
+	
 	public final static String VERSION = "0.1.0";
 
 	/**
