@@ -13,7 +13,6 @@ PPMatrixList list;
 int dim;
 int size = 24;
 
-
 Iterator it;
 
 void setup()
@@ -34,6 +33,7 @@ void draw()
     PPMatrix matrix = (PPMatrix) it.next();
     background(0);
     
+    // draws a matrix
     for(int y = 0; y < dim; y++)
     {
       for(int x = 0; x < dim; x++)

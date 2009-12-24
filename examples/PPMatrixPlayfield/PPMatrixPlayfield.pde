@@ -26,10 +26,12 @@ void draw()
   float hSize = height / dim;
   float wSize = width / dim;
   
+  // draws the matrix
   for(int y = 0; y < dim; y++)
   {
     for(int x = 0; x < dim; x++)
     {
+      // either black or white
       fill(matrix.get(x,y) ? 0 : 255);
       rect(x * wSize, y * hSize, wSize, hSize);
     }

@@ -12,15 +12,16 @@ import de.cappelnord.ppm.*;
 
 PPMatrixList list;
 int dim;
-int size = 24;
+int size = 24; // in pixel
 
 Iterator it;
 
-float drehI = 0.0;
+float phaseI = 0.0;
+float rotSpeed = 0.011;
 
 PPMatrix[] history;
 
-
+// number of old displayed PPMatrices
 final static int NUM = 6;
 
 void setup()
@@ -30,8 +31,8 @@ void setup()
   frameRate(25);
   smooth();
   
+  // downloads the current PPMatrix
   list = PublicPixelMatrix.readPPMatrixListFromURL("http://matrix.cappel-nord.de/data/history");  
-  
   it = list.iterator();
   
   history = new PPMatrix[NUM];
@@ -41,14 +42,16 @@ void setup()
 
 void draw()
 {
+  // only draw when there are some PPMatrices left
   if(it.hasNext())
   {
     background(0);
     noStroke();
     
-    
+    // pops the current matrix from the list 
     PPMatrix matrix = (PPMatrix) it.next();
     
+    // push the PPMatrix into the history array
     for(int i = history.length - 2; i >= 0; i--)
     {
        history[i+1] = history[i]; 
@@ -58,36 +61,41 @@ void draw()
     pushMatrix();
     translate(width/2, height / 2 - ((dim * size) / 2));
     
-    drehI  = drehI + 0.011;
-    rotateY( PI + (sin(drehI) * (PI/4)));
+    // rotates the view in a sinusoidal/swinging movement
+    phaseI  = phaseI + rotSpeed;
+    rotateY( PI + (sin(phaseI) * (PI/4)));
+    
     translate(-((dim * size) / 2),0);
     
+    // for every matrix out of the history (including the current)
     for(int i = 0; i < history.length; i++)
     {
-    if(history[i] != null)
-    {
-      pushMatrix();
-      translate(0,0,i*-80 );
-      
-      float alpha = 255 - (((float) i / (float) history.length) * 220);
-      
-      for(int y = 0; y < dim; y++)
+      if(history[i] != null)
       {
-        for(int x = 0; x < dim; x++)
-        {   
-          fill(0,history[i].get(x,y) ? 0 : 255,0, alpha);
-          rect(x * size, y * size, size , size);
-        }
-      }
+        pushMatrix();
+        translate(0,0,i*-80 );
+        
+        float alpha = 255 - (((float) i / (float) history.length) * 220);
       
-      popMatrix();
-    }
+        // draws the matrix;
+        for(int y = 0; y < dim; y++)
+        {
+          for(int x = 0; x < dim; x++)
+          {   
+            fill(0,history[i].get(x,y) ? 0 : 255,0, alpha);
+            rect(x * size, y * size, size , size);
+          }
+        }
+        
+        popMatrix();
+      }
     }
     
     popMatrix();
     
-    fill(255);
+    // fill(255);
     // text(matrix.getFormattedDate(),20,34);
+    
     // saveFrame("frame####.png");
   }
 }
