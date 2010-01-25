@@ -41,6 +41,8 @@ public class PublicPixelMatrix {
 	private static SimpleDateFormat dateFormat;
 	private static String dateFormatPattern ="dd.MM.yyyy HH:mm:ss";
 	private final static String currentURL = "http://matrix.cappel-nord.de/data/current";
+	private final static String historyURL = "http://matrix.cappel-nord.de/data/history";
+
 	
 	/**
 	 * Size of the matrix (default: 17).
@@ -257,6 +259,17 @@ public class PublicPixelMatrix {
 	public static PPMatrix readCurrentPPMatrix()
 	{
 	    return readPPMatrixFromURL(currentURL); 
+	}
+	
+	/**
+	 * Reads a complete history of all changes from the web server.
+	 * 
+	 * @return {@link PPMatrixList} with a complete history
+	 */
+	
+	public static PPMatrixList readCurrentPPMatrixHistory()
+	{
+	    return readPPMatrixListFromURL(historyURL); 
 	}
 	
 	/**

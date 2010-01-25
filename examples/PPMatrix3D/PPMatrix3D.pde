@@ -32,7 +32,7 @@ void setup()
   smooth();
   
   // downloads the current PPMatrix
-  list = PublicPixelMatrix.readPPMatrixListFromURL("http://matrix.cappel-nord.de/data/history");  
+  list = PublicPixelMatrix.readCurrentPPMatrixHistory();  
   it = list.iterator();
   
   history = new PPMatrix[NUM];
