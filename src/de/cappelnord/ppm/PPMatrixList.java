@@ -74,6 +74,18 @@ public class PPMatrixList {
 	}
 	
 	/**
+	 * Returns the {@link PPMatrix} at the given index.
+	 * 
+	 * @return {@link PPMatrix}
+	 * 
+	 */
+	
+	public PPMatrix get(int index)
+	{
+		return list.get(index);
+	}
+	
+	/**
 	 * Returns the size of the {@link List}.
 	 * 
 	 * @return The size of the {@link List} as integer
