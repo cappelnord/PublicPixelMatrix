@@ -1,0 +1,8 @@
+.**
+**/.DS_Store
+!.gitignore
+distribution
+reference
+resources
+web
+bin
